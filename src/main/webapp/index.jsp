@@ -1,5 +1,9 @@
 <html>
 <body>
-<h2>Hello World!</h2>
+JSESSIONID:<%= session.getId() %>
+<br>
+Context:<%= session.getSessionContext().getClass().getSimpleName() %>
+<br>
+Manager:<%= session.getClass().getSimpleName() %>
 </body>
 </html>
