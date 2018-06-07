@@ -62,4 +62,13 @@ public class StandardConfig extends AbstractConfig{
 			}
 		}
 	}
+
+	@Override
+	protected void register() {
+		if(tables!=null){
+			for(Table table:tables){
+				tablemap.put(table.getClassname(), table.getTablename());
+			}
+		}		
+	}
 }

@@ -1,7 +1,9 @@
 package com.yuanzijue.persistence;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.catalina.Context;
 import org.dom4j.Document;
@@ -21,6 +23,8 @@ public abstract class AbstractConfig implements Config{
 	
 	protected Element root;
 	
+	protected Map<String,String> tablemap = new HashMap<String ,String>();
+	
 	public AbstractConfig(Context context) {
 		this.context=context;
 		// 获取配置文件
@@ -39,11 +43,15 @@ public abstract class AbstractConfig implements Config{
         parseId();
         //解析tables
         parseTables();
+        //注册类名数据库名对应表
+        register();
         
 	}
 
 	
-
+	/*
+	 * 获取配置文件路径，有子类来实现
+	 */
 	protected abstract String filepath(Context context);
 	
 	/*
@@ -56,13 +64,11 @@ public abstract class AbstractConfig implements Config{
 	 */
 	protected abstract void parseTables();
 
-	/*
-	 * 获取配置文件路径，有子类来实现
-	 */
+	protected abstract void register();
 
 		
 	@Override
-	public Object getId() {
+	public String getId() {
 		return id;
 	}
 	
@@ -72,9 +78,29 @@ public abstract class AbstractConfig implements Config{
 	}
 	
 	@Override
-	public File getConfigFile(Context context) {
+	public File getConfigFile() {
 		return file;
 	}
+
+
+
+	@Override
+	public Element getRoot() {
+		return root;
+	}
+
+
+
+	public void setRoot(Element root) {
+		this.root = root;
+	}
+	
+	@Override
+	public Map getMap(){
+		return tablemap;
+	}
+	
+	
 	
 	
 
